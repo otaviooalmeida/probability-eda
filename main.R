@@ -1,113 +1,118 @@
-# ====================================
-# EDA – Probability and Statistics
-# Authors: Otávio Almeida (169502) and Guilherme M. Soares (169513)
-# Professor: Dr. Viviane Mattos
-# ====================================
+# Código do trabalho de AED - Profa. Viviane Mattos
+# Otávio Almeida, 169502 e Guilherme M. Soares, 169513
 
-# Set working directory and load dataset
-setwd("path/to/your/project")
-data <- read.table("dataset.txt", header = TRUE, fill = TRUE, na.strings = c("NA", ""))
+# Definindo diretório e lendo o dataset
+setwd("/home/otavio/Documents/")
+dados <- read.table("dataset.txt", header = TRUE, fill = TRUE, na.strings = c("NA", ""))
 
-# Install and load packages
-install.packages(c("dplyr", "ggplot2", "psych", "moments", "gridExtra"))
+# Carregando pacotes necessários
 library(dplyr)
 library(ggplot2)
 library(psych)
 library(moments)
 library(gridExtra)
 
-# Variable 1: Corruption Index
-corruption <- data$Índice_de_corrupção
+# --- Análise da variável: Índice de Corrupção ---
+corrupcao <- dados$Índice_de_corrupção
 
-# Frequency table
-corruption_table <- table(corruption)
-freq_abs <- as.data.frame(corruption_table)
-freq_abs$percentage <- round((freq_abs$Freq / sum(freq_abs$Freq)) * 100, 2)
+# Tabela de frequências absolutas e relativas
+tabela_corrupcao <- table(corrupcao)
+freq_abs <- as.data.frame(tabela_corrupcao)
+freq_abs$percentual <- round((freq_abs$Freq / sum(freq_abs$Freq)) * 100, 2)
 
-# Descriptive statistics
-corruption_stats <- data.frame(
-  Variable = "Corruption Index",
-  Mean = mean(corruption, na.rm = TRUE),
-  Median = median(corruption, na.rm = TRUE),
-  Mode = as.numeric(names(sort(table(corruption), decreasing = TRUE)[1])),
-  Min = min(corruption, na.rm = TRUE),
-  Max = max(corruption, na.rm = TRUE),
-  Range = diff(range(corruption, na.rm = TRUE)),
-  SD = sd(corruption, na.rm = TRUE),
-  Variance = var(corruption, na.rm = TRUE),
-  Q1 = quantile(corruption, 0.25, na.rm = TRUE),
-  Q3 = quantile(corruption, 0.75, na.rm = TRUE),
-  IQR = IQR(corruption, na.rm = TRUE),
-  P10 = quantile(corruption, 0.10, na.rm = TRUE),
-  P90 = quantile(corruption, 0.90, na.rm = TRUE),
-  Skewness = skewness(corruption, na.rm = TRUE),
-  Kurtosis = kurtosis(corruption, na.rm = TRUE)
+# Medidas descritivas
+medidas_corrupcao <- data.frame(
+  Variável = "Índice de Corrupção",
+  Média = mean(corrupcao, na.rm = TRUE),
+  Mediana = median(corrupcao, na.rm = TRUE),
+  Moda = as.numeric(names(sort(table(corrupcao), decreasing = TRUE)[1])),
+  Mínimo = min(corrupcao, na.rm = TRUE),
+  Máximo = max(corrupcao, na.rm = TRUE),
+  Amplitude = diff(range(corrupcao, na.rm = TRUE)),
+  Desvio_Padrão = sd(corrupcao, na.rm = TRUE),
+  Variância = var(corrupcao, na.rm = TRUE),
+  Q1 = quantile(corrupcao, 0.25, na.rm = TRUE),
+  Q3 = quantile(corrupcao, 0.75, na.rm = TRUE),
+  IQR = IQR(corrupcao, na.rm = TRUE),
+  P10 = quantile(corrupcao, 0.10, na.rm = TRUE),
+  P90 = quantile(corrupcao, 0.90, na.rm = TRUE),
+  Assimetria = skewness(corrupcao, na.rm = TRUE),
+  Curtose = kurtosis(corrupcao, na.rm = TRUE)
 )
 
-# Plots
-hist(corruption, main = "Histogram – Corruption Index", xlab = "Ranking Position", col = "steelblue", breaks = 15)
-boxplot(corruption, main = "Boxplot – Corruption Index", ylab = "Ranking Position", col = "orange")
-qqnorm(corruption, main = "Normal Q-Q Plot – Corruption Index")
-qqline(corruption, col = "red")
+# Gráficos para Índice de Corrupção
+hist(corrupcao,
+     main = "Histograma – Índice de Corrupção",
+     xlab = "Posição no Ranking",
+     col = "steelblue", breaks = 15)
 
-# Variable 2: Annual Income per Capita
-income <- data$Renda_anual_
+boxplot(corrupcao,
+        main = "Boxplot – Índice de Corrupção",
+        ylab = "Posição no Ranking",
+        col = "orange")
 
-# Descriptive statistics
-income_stats <- data.frame(
-  Variable = "Annual Income per Capita",
-  Mean = mean(income, na.rm = TRUE),
-  Median = median(income, na.rm = TRUE),
-  Mode = as.numeric(names(sort(table(income), decreasing = TRUE)[1])),
-  Min = min(income, na.rm = TRUE),
-  Max = max(income, na.rm = TRUE),
-  Range = diff(range(income, na.rm = TRUE)),
-  SD = sd(income, na.rm = TRUE),
-  Variance = var(income, na.rm = TRUE),
-  Q1 = quantile(income, 0.25, na.rm = TRUE),
-  Q3 = quantile(income, 0.75, na.rm = TRUE),
-  IQR = IQR(income, na.rm = TRUE),
-  P10 = quantile(income, 0.10, na.rm = TRUE),
-  P90 = quantile(income, 0.90, na.rm = TRUE),
-  Skewness = skewness(income, na.rm = TRUE),
-  Kurtosis = kurtosis(income, na.rm = TRUE)
+qqnorm(corrupcao, main = "Gráfico de Probabilidade Normal – Índice de Corrupção")
+qqline(corrupcao, col = "red")
+
+# --- Análise da variável: Renda Anual per Capita ---
+renda <- dados$Renda_anual_
+
+# Medidas descritivas
+medidas_renda <- data.frame(
+  Variável = "Renda Anual per Capita",
+  Média = mean(renda, na.rm = TRUE),
+  Mediana = median(renda, na.rm = TRUE),
+  Moda = as.numeric(names(sort(table(renda), decreasing = TRUE)[1])),
+  Mínimo = min(renda, na.rm = TRUE),
+  Máximo = max(renda, na.rm = TRUE),
+  Amplitude = diff(range(renda, na.rm = TRUE)),
+  Desvio_Padrão = sd(renda, na.rm = TRUE),
+  Variância = var(renda, na.rm = TRUE),
+  Q1 = quantile(renda, 0.25, na.rm = TRUE),
+  Q3 = quantile(renda, 0.75, na.rm = TRUE),
+  IQR = IQR(renda, na.rm = TRUE),
+  P10 = quantile(renda, 0.10, na.rm = TRUE),
+  P90 = quantile(renda, 0.90, na.rm = TRUE),
+  Assimetria = skewness(renda, na.rm = TRUE),
+  Curtose = kurtosis(renda, na.rm = TRUE)
 )
 
-# Plots (raw)
-hist(income, main = "Histogram – Annual Income per Capita", xlab = "Income (US$)", col = "forestgreen", breaks = 20)
-boxplot(income, main = "Boxplot – Annual Income per Capita", ylab = "Income (US$)", col = "tomato")
-qqnorm(income, main = "Normal Q-Q Plot – Annual Income per Capita")
-qqline(income, col = "red")
+# Gráficos para Renda Anual per Capita
+hist(renda,
+     main = "Histograma – Renda Anual per Capita",
+     xlab = "Renda (US$ por habitante)",
+     col = "forestgreen", breaks = 20)
 
-# Log transformation
-log_income <- log10(income[income > 0])
-hist(log_income, main = "Histogram – Annual Income per Capita (log10)", xlab = "log10(Income in US$)", col = "purple", breaks = 15)
-boxplot(log_income, main = "Boxplot – Annual Income per Capita (log10)", ylab = "log10(Income in US$)", col = "darkorange")
+boxplot(renda,
+        main = "Boxplot – Renda Anual per Capita",
+        ylab = "Renda (US$ por habitante)",
+        col = "tomato")
 
-# Correlation plot
-plot(corruption, income,
-     main = "Scatterplot: Corruption Index vs. Income per Capita",
-     xlab = "Corruption Index (ranking position)",
-     ylab = "Income per Capita (US$)",
+qqnorm(renda, main = "Gráfico de Probabilidade Normal – Renda Anual per Capita")
+qqline(renda, col = "red")
+
+# Gráfico de Dispersão entre as variáveis
+plot(corrupcao, renda,
+     main = "Dispersão: Índice de Corrupção x Renda per Capita",
+     xlab = "Índice de Corrupção (posição no ranking)",
+     ylab = "Renda per Capita (US$)",
      pch = 19, col = "darkblue")
 
-# Consolidated statistics table
-summary_table <- rbind(
-  cbind(Variable = "Corruption Index", corruption_stats),
-  cbind(Variable = "Annual Income per Capita", income_stats)
+# Consolidação das medidas descritivas
+medidas_gerais <- rbind(
+  cbind(Variável = "Índice de Corrupção", medidas_corrupcao),
+  cbind(Variável = "Renda Anual per Capita", medidas_renda)
 )
 
-# Transpose and format
-final_table <- as.data.frame(t(summary_table[-1]))
-colnames(final_table) <- summary_table$Variable
-final_table$Statistic <- rownames(final_table)
-final_table <- final_table[, c("Statistic", "Corruption Index", "Annual Income per Capita")]
+tabela_final <- as.data.frame(t(medidas_gerais[-1]))
+colnames(tabela_final) <- medidas_gerais$Variável
+tabela_final$Estatística <- rownames(tabela_final)
+tabela_final <- tabela_final[, c("Estatística", "Índice de Corrupção", "Renda Anual per Capita")]
 
-# Export (uncomment if needed)
-# write.csv(summary_table, file = "summary_table.csv", row.names = FALSE)
-# write.csv(freq_abs, file = "corruption_frequency.csv", row.names = FALSE)
+# Exportando tabelas e visualizações
+write.csv(medidas_gerais, file = "medidas_gerais.csv", row.names = FALSE)
+write.csv(freq_abs, file = "freq_abs.csv", row.names = FALSE)
 
-# png("summary_table.png", width = 800, height = 400, res = 150)
-# grid.table(final_table)
-# print(final_table)
-# dev.off()
+png("medidas_gerais.png", width = 800, height = 400, res = 150)
+grid.table(tabela_final)
+dev.off()
