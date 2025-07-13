@@ -2,11 +2,6 @@
 
 This repository contains an Exploratory Data Analysis (EDA) project developed in R as part of a university course on Probability and Statistics.
 
-## 👥 Authors
-- Otávio C. Almeida
-- Guilherme M. Soares
-- Instructor: Dr. Viviane Mattos
-
 ## 📁 Project Overview
 
 The goal of this project is to explore and understand the behavior of two key variables:
